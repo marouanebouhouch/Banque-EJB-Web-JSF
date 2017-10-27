@@ -7,10 +7,20 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
    <title>Banque</title>
+   <link rel="stylesheet" type="text/css" href="./css/style.css" />
 </h:head>
 <h:body>
    <div>
-      <h:dataTable value="#{banqueMB.listComptes}" var="c" >
+      <h:form>
+         <h:panelGrid columns="2">
+            <h:outputText value="Solde initial"/>
+            <h:inputText value="#{comptesMB.solde}"/>
+            <h:commandButton value="Ajouter" action="#{comptesMB.addCompte}"/>
+         </h:panelGrid>
+      </h:form>
+   </div>
+   <div>
+      <h:dataTable value="#{comptesMB.listComptes}" var="c" class="table" >
          <h:column>
             <f:facet name="header">
                <h:outputText value="Sode"/>
@@ -28,6 +38,18 @@
                <h:outputText value="Date de création"/>
             </f:facet>
             <h:outputText value="#{c.date_creation}"/>
+         </h:column>
+         <h:column>
+            <h:link value="Verser " outcome="operations" >
+               <f:param name="code" value="#{c.code}" />
+               <f:param name="op" value="v" />
+            </h:link>
+         </h:column>
+         <h:column>
+            <h:link value="Retirer " outcome="operations" >
+               <f:param name="code" value="#{c.code}" />
+               <f:param name="op" value="r" />
+            </h:link>
          </h:column>
       </h:dataTable>
    </div>
